@@ -1,11 +1,8 @@
 
 # Electricity Bill Calculator
 
-# Function to calculate electricity cost
+# Calculate electricity cost
 def units_cost(units):
-    if units < 0:
-        raise ValueError("Units cannot be negative")
-
     if units <= 100:
         return units * 3
     elif units <= 200:
@@ -14,14 +11,22 @@ def units_cost(units):
         return (100 * 3) + (100 * 5) + ((units - 200) * 7)
 
 
-# Function to calculate fixed charge
+# Fixed charge
 def fixed_charge():
     return 50
 
 
-# Function to calculate total bill
+# Calculate total bill
 def total_bill(units):
     return units_cost(units) + fixed_charge()
+
+
+# NEW FEATURE: High consumption detection
+def check_high_consumption(units):
+    if units > 200:
+        return "High Electricity Consumption!"
+    else:
+        return "Normal Electricity Consumption."
 
 
 # Main function
@@ -31,26 +36,22 @@ def main():
     try:
         units = float(input("Enter electricity units consumed: "))
 
-        if not units.is_integer():
-            print("Please enter a whole number of units.")
+        if not units.is_integer() or units < 0:
+            print("Please enter a valid whole number.")
             return
 
         units = int(units)
-
-        if units < 0:
-            print("Units cannot be negative.")
-            return
 
         print("\n----- BILL DETAILS -----")
         print("Units Consumed:", units)
         print("Electricity Cost: Rs.", units_cost(units))
         print("Fixed Charge: Rs.", fixed_charge())
-        print("Total Electricity Bill: Rs.", total_bill(units))
+        print("Total Bill: Rs.", total_bill(units))
+        print("Consumption Status:", check_high_consumption(units))
 
     except ValueError as e:
         print("Invalid Input:", e)
 
 
-# Execute main function
 if __name__ == "__main__":
     main()
